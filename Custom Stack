@@ -1,0 +1,80 @@
+public class CustomStack<E> {
+
+    // Creating own Node
+    static class Node<E>{
+        E data;
+        Node<E> next;
+
+        public Node(E data){
+            this.data=data;
+            this.next=null;
+        }
+    }
+    private Node<E> top;
+    private int size;
+
+    public  CustomStack(){
+        this.top=null;
+        this.size=0;
+    }
+    // check stack is empty?
+    // Time complexity: O(1)
+    public boolean isEmpty(){
+        return  top == null;
+    }
+    // LIFO (Last In First Out)
+    // add element --> push
+    // Time complexity: O(1)
+    public void add(E data){
+        Node<E> newNode= new Node<>(data);
+        newNode.next=top;
+        top=newNode;
+        size++;
+    }
+    // remove of stack for last element --> pop
+    // Time complexity: O(1)
+    public E remove(){
+        if (isEmpty()){
+            System.out.println("Stack is empty.");
+            return null;
+        }
+       E lastElement= top.data;
+        top = top.next;
+        size--;
+        return  lastElement;
+    }
+    // call of stack's element --> peek
+    // Time complexity: O(1)
+    public E head(){
+        if (isEmpty()){
+            System.out.println("Stack is empty.");
+        }
+        return top.data;
+    }
+    // size of stack
+
+    public int getSize(){
+        return  size;
+    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<E> current = top;
+        // to correct print need to reverse
+        CustomStack<E> reverse = new CustomStack<>();
+        while (current != null) {
+            reverse.add(current.data);
+            current = current.next;
+        }
+        //print them
+        current = reverse.top;
+        while (current != null) {
+            sb.append(current.data);
+            if (current.next != null) {
+                sb.append(",");
+            }
+            current = current.next;
+        }
+        return sb.toString();
+    }
+}
